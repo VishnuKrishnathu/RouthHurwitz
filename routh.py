@@ -23,7 +23,18 @@ table.append(layer2)
 for i in range(2, len(equation)):
     layers = []
     for j in range(0, len(layer1)-1):
-        layers.append(round((table[i-1][0]*table[i-2][j+1] - table[i-2][0]*table[i-1][j+1])/table[i-1][0], 2))
+        if (table[i-1][0] == 0):
+            table[i-1][0] = "E"
+            layers.append((table[i - 1][0] +"*"+ str(table[i - 2][j + 1]) + "-" + str(table[i - 2][0] * table[i - 1][j + 1])+ "/"+table[i-1][0]))
+        elif (table[i-1][0] == "E"):
+            layers.append((table[i - 1][0] +"*"+ str(table[i - 2][j + 1]) + "-" + str(table[i - 2][0] * table[i - 1][j + 1])+ "/"+table[i-1][0]))
+        elif(type(table[i-1][0])== str and table[i-1][0] != "E" ):
+            layers.append((table[i - 1][0] + "*" + str(table[i - 2][j + 1]) + "-" + str(
+                table[i - 2][0]) +"*" + str(table[i - 1][j + 1]) + "/" + table[i - 1][0]))
+        else:
+            layers.append(
+                round((table[i - 1][0] * table[i - 2][j + 1] - table[i - 2][0] * table[i - 1][j + 1]) / table[i - 1][0],
+                      2))
     layers = zero_func(layers, len(layer1))
     table.append(layers)
 print(DataFrame(table))
